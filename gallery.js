@@ -17,13 +17,18 @@ function Gallery(gallery) {
     prevButton.addEventListener('click', showPrevImage); 
   }
 
-  function closeModal(event) {
-    if (event.target === event.currentTarget) {
+  function closeModal() {
+    
       modal.classList.remove("open");
-    }
+    
     window.removeEventListener('keyup',handleKeyUp)
     nextButton.removeEventListener('click', showNextImage); 
     prevButton.removeEventListener('click', showPrevImage); 
+  }
+  function handleOutModalClick(event){
+    if (event.target === event.currentTarget){
+        closeModal();
+    }
   }
   function showImage(image) {
    
@@ -42,12 +47,12 @@ function showPrevImage(){
 }
 
 function handleKeyUp(event){
-    if(event.key === 'Escape')return modal.classList.remove('open')
+    if(event.key === 'Escape')return closeModal();
     if(event.key === 'ArrowLeft') return showPrevImage();
     if(event.key === 'ArrowRight') return showNextImage();
 }
   images.forEach((image) => image.addEventListener("click", ({currentTarget})=> showImage(currentTarget)));
-  modal.addEventListener("click", closeModal);
+  modal.addEventListener("click", handleOutModalClick);
 
 }
 const gallery1 = Gallery(document.querySelector(".gallery1"));
